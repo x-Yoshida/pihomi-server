@@ -17,7 +17,7 @@ void Clock::getTime()
 
 }
 
-bool Clock::connected()
+bool Clock::getConnected()
 {
     return 1;
 }
@@ -35,7 +35,7 @@ int Clock::getMinutes()
 }
 
 
-bool WaterThingy::connected()
+bool WaterThingy::getConnected()
 {
     return 1;
 }

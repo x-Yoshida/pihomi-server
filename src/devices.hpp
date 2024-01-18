@@ -12,7 +12,7 @@ struct Clock
     Clock();
     void getTime();
     void setClock();
-    bool connected();
+    bool getConnected();
     int getHours();
     int getMinutes();
 };
@@ -22,7 +22,7 @@ struct WaterThingy
     bool connected;
     int waterLevel;
 //Check if connected
-    bool connected(); 
+    bool getConnected(); 
 //Check water level
     int getWaterLevel();
 //send if connected

@@ -23,8 +23,7 @@ struct Test
     std::thread ttrd;
     ~Test()
     {
-        if(ttrd.joinable())
-            ttrd.join();
+        ttrd.join();
     }
     void tf()
     {
