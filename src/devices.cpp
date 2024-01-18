@@ -2,7 +2,8 @@
 
 Clock::Clock()
 {
-    getTime();
+    connected=true;
+    clockThread = std::thread(&Clock::update,this);
     
 }
 
@@ -13,8 +14,27 @@ void Clock::getTime()
     //std::strftime(buf,sizeof(buf),"%H:%M",std::localtime(&utime)); Imagine używać normalengo zegara
     std::strftime(buf,sizeof(buf),"%I:%M%p",std::localtime(&utime));
     time = buf;
-    std::cout << time << std::endl;
 
+}
+
+void Clock::update()
+{
+    while(serverRunning)
+    {
+        if(connected)
+        {
+            getTime();
+            //updateTime();
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));   
+        }
+
+    }
+
+}
+
+void Clock::updateTime()
+{
+    std::cout << time << std::endl;
 }
 
 bool Clock::getConnected()

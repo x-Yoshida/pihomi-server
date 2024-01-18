@@ -25,7 +25,7 @@ Server::Server(uint port)
         error(1, errno, "listen failed");
     epoll_event ee {EPOLLIN, {.ptr=this}};
     epoll_ctl(_epollFd, EPOLL_CTL_ADD, _sock, &ee);
-    serverRunning=true;
+    serverThread = std::thread(&Server::serverLoop,this);
 }
 
 Server::~Server()
@@ -48,16 +48,14 @@ void Server::handleEvent(uint32_t events)
         auto clientFd = accept(_sock, (sockaddr*) &clientAddr, &clientAddrSize);
         if(clientFd == -1) error(1, errno, "accept failed");
         
-        //printf("new connection from: %s:%hu (fd: %d)\n", inet_ntoa(clientAddr.sin_addr), ntohs(clientAddr.sin_port), clientFd);
         std::cout << "new connection from: " << inet_ntoa(clientAddr.sin_addr) << ":" << ntohs(clientAddr.sin_port) << " (fd: "<< clientFd <<")" << std::endl;
         close(clientFd);
-        //clients.insert(new Client(clientFd,_epollFd));
     }
     if(events & ~EPOLLIN){
         error(0, errno, "Event %x on server socket", events);
         close(_sock);
         serverRunning=false;
-        //ctrl_c(SIGINT);
+        
     }
 }
 

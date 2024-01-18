@@ -12,17 +12,21 @@
 #include <unordered_set>
 #include <list>
 #include <signal.h>
-#include <pthread.h>
+#include <thread>
+
+#include "devices.hpp"
 
 extern bool serverRunning;
 extern void ctrl_c(int);
 
 void setReuseAddr(int sock);
 
-class Server 
+struct Server 
 {
     int _sock;
     int _epollFd;
+    DeviceController devicecontroller;
+    std::thread serverThread;
     public:
         Server(uint port);
         ~Server();

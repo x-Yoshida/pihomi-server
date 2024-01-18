@@ -11,13 +11,6 @@ void ctrl_c(int)
     serverRunning=false;
 }
 
-void* serv(void *s)
-{
-    Server &server = *((Server *)s);
-    server.serverLoop();
-    return NULL;
-}
-
 struct Test
 {
     std::thread ttrd;
@@ -27,9 +20,10 @@ struct Test
     }
     void tf()
     {
+        std::cout << "UwU\n";
         for(int i = 0 ; i<5;i++)
         {
-            std::cout << i;
+            std::cout << i <<std::endl;
         }
     }
     void uwu()
@@ -41,14 +35,15 @@ struct Test
 
 int main(int argc,char** argv)
 {
-    pthread_t servThread;
-    Clock c;
-    Test t;
-    
+    serverRunning=true;
+    //Clock c;
+    //Test t;
     signal(SIGINT, ctrl_c);
     Server server(std::stoi("1234"));
     ssock=server.sock();
-    pthread_create(&servThread,NULL,serv,&server);
-    pthread_join(servThread,NULL);
+    while (serverRunning)
+    {
+    }
+    
     return 0;
 }
