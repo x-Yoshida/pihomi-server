@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/pihomi.bin.dir/src/server.cpp.o CMakeFiles/pihomi.bin.dir/src/main.cpp.o CMakeFiles/pihomi.bin.dir/src/devices.cpp.o CMakeFiles/pihomi.bin.dir/src/NTPClient.cpp.o -o pihomi.bin  /usr/lib/x86_64-linux-gnu/libboost_system.so.1.83.0 
