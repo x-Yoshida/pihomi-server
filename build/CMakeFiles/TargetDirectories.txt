@@ -1,0 +1,3 @@
+/home/yoshida/Dokumenty/Studia/SW/build/CMakeFiles/pihomi.bin.dir
+/home/yoshida/Dokumenty/Studia/SW/build/CMakeFiles/edit_cache.dir
+/home/yoshida/Dokumenty/Studia/SW/build/CMakeFiles/rebuild_cache.dir
