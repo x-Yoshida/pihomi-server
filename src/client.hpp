@@ -14,15 +14,25 @@
 #include <signal.h>
 #include <thread>
 #include <vector>
+#include <sstream>
+
+#include "controller.hpp"
+//#include <algorithm>
+
 
 struct Client
 {
-    int fd;
+    int _fd;
+    int _epollFd;
     int connected;
-    int timeoutCounter;
-    std::thread clientThread;
-    Client();
+    phm::controller &_controller;
+    Client(int fd,int epollfd,phm::controller &controller);
     ~Client();
+    void write(std::string msg);
+    std::string read();
+    void remove(std::vector<Client*> &clients);
+    void handleEvent(uint32_t events,std::vector<Client*> &clients);
+    void sendCurrentState();
     void updateClient();
     void checkConnection();
 };

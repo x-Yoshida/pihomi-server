@@ -15,9 +15,9 @@ void Timer::updateTimer()
 {
     while(running)
     {
-        if(!paused)///Tu powinien być mutex prawdopodnie
-        {
-            
-        }
+        //if(!paused)///Tu powinien być mutex prawdopodnie
+        //{
+        //    
+        //}
     }
 }
