@@ -75,6 +75,14 @@ int Clock::getMinutes()
     return std::stoi(minutes);
 }
 
+Clock::~Clock()
+{
+    arduino.close();
+    if(clockThread.joinable())
+    {
+        clockThread.join();
+    }
+}
 
 bool WaterThingy::getConnected()
 {

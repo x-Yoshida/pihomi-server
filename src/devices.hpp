@@ -20,6 +20,7 @@ struct Clock
     std::string time;
     std::thread clockThread;
     Clock(std::string port);
+    ~Clock();
     void getTime();
     void update();
     bool updateTime();

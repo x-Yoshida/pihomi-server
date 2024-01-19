@@ -15,7 +15,7 @@ Server::Server(uint port,std::string serial): devicecontroller(DeviceController(
     if(_sock == -1) 
         error(1, errno, "socket failed");
 
-    sockaddr_in serverAddr{.sin_family=AF_INET, .sin_port=htons((short)port), .sin_addr={INADDR_ANY}};
+    sockaddr_in serverAddr{.sin_family=AF_INET, .sin_port=htons((short)port), .sin_addr={INADDR_ANY},.sin_zero={0}};
     int res = bind(_sock, (sockaddr*) &serverAddr, sizeof(serverAddr));
     if(res) 
         error(1, errno, "bind failed");
@@ -31,6 +31,10 @@ Server::Server(uint port,std::string serial): devicecontroller(DeviceController(
 Server::~Server()
 {
     close(_sock);
+    if(serverThread.joinable())
+    {
+        serverThread.join();
+    }
 }
 
 int Server::sock() const

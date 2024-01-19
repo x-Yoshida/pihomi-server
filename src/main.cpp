@@ -35,14 +35,17 @@ struct Test
 
 int main(int argc,char** argv)
 {
+    if (argc < 2) {
+        std::cerr << "Serial port has to be specified.\n";
+        return -1;
+    }
     serverRunning=true;
-    //Clock c;
-    //Test t;
     signal(SIGINT, ctrl_c);
-    Server server(std::stoi("3141"),"/dev/ttyACM0");
+    Server server(std::stoi("3141"),argv[1]);
     ssock=server.sock();
     while (serverRunning)
     {
+
     }
     
     return 0;

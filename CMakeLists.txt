@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
 project(pihomi)
 set(CMAKE_CXX_STANDARD 20)
+add_compile_options("-Wall" "-Werror" "-Wextra" "-pedantic")
 add_executable(pihomi.bin src/server.cpp src/main.cpp src/devices.cpp)
