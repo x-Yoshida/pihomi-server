@@ -39,6 +39,7 @@ void Clock::update()
 
 bool Clock::updateTime()
 {
+    arduino.write(time);
     std::string msg = arduino.read();//std::cout << time << std::endl;
     if(msg.size()>0)
     {
