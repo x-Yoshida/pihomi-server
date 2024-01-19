@@ -13,7 +13,9 @@
 #include <list>
 #include <signal.h>
 #include <thread>
+#include <vector>
 
+#include "client.hpp"
 #include "devices.hpp"
 
 extern bool serverRunning;
@@ -28,7 +30,7 @@ struct Server
     DeviceController devicecontroller;
     std::thread serverThread;
     public:
-        Server(uint port);
+        Server(uint port,std::string serial);
         ~Server();
         int sock() const;
         void handleEvent(uint32_t events);

@@ -39,7 +39,7 @@ int main(int argc,char** argv)
     //Clock c;
     //Test t;
     signal(SIGINT, ctrl_c);
-    Server server(std::stoi("1234"));
+    Server server(std::stoi("3141"),"/dev/ttyACM0");
     ssock=server.sock();
     while (serverRunning)
     {

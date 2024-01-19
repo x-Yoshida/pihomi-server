@@ -1,8 +1,13 @@
 #include "devices.hpp"
 
-Clock::Clock()
+Clock::Clock(std::string port): arduino(phm::serial_port(port,9600))
 {
     connected=true;
+    if(!arduino.is_open())
+    {
+        std::cerr << "Could not open serial port on " << port << '\n';
+        exit(-1);
+    }
     clockThread = std::thread(&Clock::update,this);
     
 }
@@ -12,7 +17,7 @@ void Clock::getTime()
     time_t utime = std::time(NULL);
     char buf[40];
     //std::strftime(buf,sizeof(buf),"%H:%M",std::localtime(&utime)); Imagine używać normalengo zegara
-    std::strftime(buf,sizeof(buf),"%I:%M%p",std::localtime(&utime));
+    std::strftime(buf,sizeof(buf),"%I:%M%p\n",std::localtime(&utime));
     time = buf;
 
 }
@@ -24,7 +29,7 @@ void Clock::update()
         if(connected)
         {
             getTime();
-            //updateTime();
+            status=updateTime();
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));   
         }
 
@@ -32,9 +37,24 @@ void Clock::update()
 
 }
 
-void Clock::updateTime()
+bool Clock::updateTime()
 {
-    std::cout << time << std::endl;
+    std::string msg = arduino.read();//std::cout << time << std::endl;
+    if(msg.size()>0)
+    {
+        if(msg.substr(0,2)=="OK")
+        {
+            if(msg[2]=='1')
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    return false;
 }
 
 bool Clock::getConnected()
@@ -65,4 +85,9 @@ int WaterThingy::getWaterLevel()
 {
     //Do communication
     return 4;
+}
+
+DeviceController::DeviceController(std::string port): clock(Clock(port))
+{
+
 }

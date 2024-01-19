@@ -8,7 +8,7 @@ void setReuseAddr(int sock)
     if(res) error(1,errno, "setsockopt failed");
 }
 
-Server::Server(uint port)
+Server::Server(uint port,std::string serial): devicecontroller(DeviceController(serial))
 {
     _epollFd = epoll_create1(0);
     _sock = socket(AF_INET, SOCK_STREAM, 0);

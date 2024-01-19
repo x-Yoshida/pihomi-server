@@ -7,17 +7,22 @@
 #include <thread>
 #include <chrono>
 
+#include "serial.hpp"
+
 extern bool serverRunning;
 
 struct Clock
 {
+    std::string _port;
+    phm::serial_port arduino;
     bool connected;
+    bool status;
     std::string time;
     std::thread clockThread;
-    Clock();
+    Clock(std::string port);
     void getTime();
     void update();
-    void updateTime();
+    bool updateTime();
     void setClock();
     bool getConnected();
     int getHours();
@@ -48,6 +53,7 @@ struct Outlet
 
 struct DeviceController
 {
+    DeviceController(std::string port);
     Clock clock;
 //
 };
