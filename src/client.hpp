@@ -31,9 +31,8 @@ struct Client
     void write(std::string msg);
     std::string read();
     void remove(std::vector<Client*> &clients);
-    void handleEvent(uint32_t events,std::vector<Client*> &clients);
+    void handleEvent(uint32_t events,std::vector<Client*> &clients,std::array<bool,4> &outlets);
+    void handleMessage(std::string&msg,std::array<bool,4> &outlets);
     void sendCurrentState();
-    void updateClient();
-    void checkConnection();
 };
 

@@ -10,6 +10,10 @@ void setReuseAddr(int sock)
 
 Server::Server(uint32_t port,std::string serial): controller(phm::controller(serial))
 {
+    for(int i=0;i<4;i++)
+    {
+        socks[i]=controller.get_outlet(i).get_state();
+    }
     _epollFd = epoll_create1(0);
     _sock = socket(AF_INET, SOCK_STREAM, 0);
     if(_sock == -1) 
@@ -90,7 +94,7 @@ void Server::serverLoop()
         }
         else
         {
-            ((Client*)(ee.data.ptr))->handleEvent(ee.events,clients);
+            ((Client*)(ee.data.ptr))->handleEvent(ee.events,clients,socks);
         }
     }
 }

@@ -34,10 +34,13 @@ void Client::sendCurrentState()
     ss <<_controller.get_clock().get_state() <<";";
     ss <<_controller.get_irrigation().get_state()<<";";
     ss <<_controller.outlets_state()<<";";
-    ss <<_controller.get_outlet(0).get_state()<<";";
-    ss <<_controller.get_outlet(1).get_state()<<";";
-    ss <<_controller.get_outlet(2).get_state()<<";";
-    ss <<_controller.get_outlet(3).get_state()<<";";
+    if(_controller.outlets_state())
+    {
+        for(int i=0;i<4;i++)
+        {
+            ss <<_controller.get_outlet(i).get_state()<<";";
+        }
+    }
     ss <<uint16_t(_controller.get_irrigation().get_water_level())<<";";
     ss <<_controller.get_irrigation().get_watering_delay()<<";";
     ss <<_controller.get_irrigation().get_watering_volume()<<"\n";
@@ -61,15 +64,40 @@ std::string Client::read()
     return buffer;
 }
 
-void Client::handleEvent(uint32_t events,std::vector<Client*> &clients)
+void Client::handleEvent(uint32_t events,std::vector<Client*> &clients,std::array<bool,4> &outlets)
 {
     if(events & EPOLLIN) 
     {
         std::string buffer = read();
+        handleMessage(buffer,outlets);
         sendCurrentState();
     }
     if(events & ~EPOLLIN)
     {
         remove(clients);
     }
+}
+void Client::handleMessage(std::string&msg,std::array<bool,4> &outlets)
+{
+
+    if(msg=="o\n")
+    {
+        std::cout<<"Gniazdka coś\n";
+        if(_controller.outlets_state())
+        {
+            for(int i=0;i<4;i++)
+            {
+                outlets[i]=_controller.get_outlet(i).get_state();
+                _controller.get_outlet(i).set_state(false);
+            }
+        }
+        else
+        {
+            for(int i=0;i<4;i++)
+                _controller.get_outlet(i).set_state(outlets[i]);
+        }
+        _controller.set_outlets_state(!_controller.outlets_state());
+    }
+
+
 }

@@ -27,6 +27,7 @@ struct Server
 {
     int _sock;
     int _epollFd;
+    std::array<bool,4> socks;
     phm::controller controller;
     std::thread serverThread;
     std::vector<Client*> clients;
