@@ -31,7 +31,7 @@ namespace phm {
 
         void write(const std::string& data) const { uwu(data); };
 
-        [[nodiscard]] std::string read() const { return "OK\n"; };
+        [[nodiscard]] std::string read() const { return "OK1\n"; };
     };
 
     class clock {

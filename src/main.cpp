@@ -7,6 +7,7 @@ int ssock;
 void ctrl_c(int)
 {
     serverRunning=false;
+    std::exit(0);
 }
 
 
