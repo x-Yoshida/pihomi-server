@@ -113,7 +113,7 @@ void Client::handleMessage(std::string&msg,std::array<bool,4> &outlets)
             _controller.get_outlet(3).set_state(!_controller.get_outlet(3).get_state());
         }
     }
-    else if(msg=="c\n")
+    if(msg=="c\n")
     {
         _controller.get_clock().set_state(!_controller.get_clock().get_state());
     }
