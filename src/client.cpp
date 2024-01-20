@@ -34,10 +34,10 @@ void Client::sendCurrentState()
     ss <<_controller.get_clock().get_state() <<";";
     ss <<_controller.get_irrigation().get_state()<<";";
     ss <<_controller.outlets_state()<<";";
-    ss <<"1"<<_controller.get_outlet(0).get_state()<<";";
-    ss <<"2"<<_controller.get_outlet(1).get_state()<<";";
-    ss <<"3"<<_controller.get_outlet(2).get_state()<<";";
-    ss <<"4"<<_controller.get_outlet(3).get_state()<<";";
+    ss <<_controller.get_outlet(0).get_state()<<";";
+    ss <<_controller.get_outlet(1).get_state()<<";";
+    ss <<_controller.get_outlet(2).get_state()<<";";
+    ss <<_controller.get_outlet(3).get_state()<<";";
     ss <<uint16_t(_controller.get_irrigation().get_water_level())<<";";
     ss <<_controller.get_irrigation().get_watering_delay()<<";";
     ss <<_controller.get_irrigation().get_watering_volume()<<"\n";

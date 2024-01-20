@@ -6,7 +6,6 @@ bool serverRunning=false;
 int ssock;
 void ctrl_c(int)
 {
-    write(ssock,"stopping",9);
     serverRunning=false;
 }
 
@@ -27,7 +26,7 @@ int main(int argc,char** argv)
     {
 
     }
-    server.serverThread.detach();
+    pthread_cancel(server.serverThread.native_handle());
     
     return 0;
 }
